@@ -8,6 +8,7 @@ class Ui_Dialog(object):
     turn = 0
     turns = 0
     status = 0
+    buttons = []
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -17,6 +18,7 @@ class Ui_Dialog(object):
         self.pushButton_4.setGeometry(QtCore.QRect(90, 218, 75, 61))
         self.pushButton_4.setText("")
         self.pushButton_4.setObjectName("pushButton_4")
+
         self.pushButton_2 = QtWidgets.QPushButton(Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(250, 108, 75, 61))
         self.pushButton_2.setText("")
@@ -41,45 +43,52 @@ class Ui_Dialog(object):
         self.pushButton_3.setGeometry(QtCore.QRect(400, 108, 75, 61))
         self.pushButton_3.setText("")
         self.pushButton_3.setObjectName("pushButton_3")
+
         self.pushButton = QtWidgets.QPushButton(Dialog)
         self.pushButton.setGeometry(QtCore.QRect(90, 108, 75, 61))
         self.pushButton.setText("")
         self.pushButton.setObjectName("pushButton")
+
         self.pushButton_6 = QtWidgets.QPushButton(Dialog)
         self.pushButton_6.setGeometry(QtCore.QRect(400, 218, 75, 61))
         self.pushButton_6.setText("")
         self.pushButton_6.setObjectName("pushButton_6")
+
         self.lineEdit_2 = QtWidgets.QLineEdit(Dialog)
         self.lineEdit_2.setGeometry(QtCore.QRect(240, 38, 113, 20))
         self.lineEdit_2.setObjectName("lineEdit_2")
+
         self.pushButton_7 = QtWidgets.QPushButton(Dialog)
         self.pushButton_7.setGeometry(QtCore.QRect(90, 340, 75, 61))
         self.pushButton_7.setText("")
         self.pushButton_7.setObjectName("pushButton_7")
 
+        self.buttons = [self.pushButton, self.pushButton_2, self.pushButton_3, self.pushButton_4, self.pushButton_5, self.pushButton_6, self.pushButton_7, self.pushButton_8, self.pushButton_9]
+
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-        self.pushButton.clicked.connect(partial(self.playTurn, self.turn, self.pushButton, 0))
-        self.pushButton_2.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_2, 1))
-        self.pushButton_3.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_3, 2))
-        self.pushButton_4.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_4, 3))
-        self.pushButton_5.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_5, 4))
-        self.pushButton_6.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_6, 5))
-        self.pushButton_7.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_7, 6))
-        self.pushButton_8.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_8, 7))
-        self.pushButton_9.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_9, 8))
+        self.pushButton.clicked.connect(partial(self.playTurn, 0))
+        self.pushButton_2.clicked.connect(partial(self.playTurn, 1))
+        self.pushButton_3.clicked.connect(partial(self.playTurn, 2))
+        self.pushButton_4.clicked.connect(partial(self.playTurn, 3))
+        self.pushButton_5.clicked.connect(partial(self.playTurn, 4))
+        self.pushButton_6.clicked.connect(partial(self.playTurn, 5))
+        self.pushButton_7.clicked.connect(partial(self.playTurn, 6))
+        self.pushButton_8.clicked.connect(partial(self.playTurn, 7))
+        self.pushButton_9.clicked.connect(partial(self.playTurn, 8))
         self.resetButton.clicked.connect(self.reset)
 
-    def playTurn(self, turn, button, boardnum):
+    def playTurn(self, boardnum):
 
         if self.status != 1:
 
             if self.board[boardnum] == 1 or self.board[boardnum] == 0:
-                print("already placed!")
+                # redo turn!
+                pass
             else:
                 self.board[boardnum] = 0
-                button.setStyleSheet("background-color: blue")
+                self.buttons[boardnum].setStyleSheet("background-color: blue")
                 self.turns += 1
                 self.checkWin(0)
             self.comTurn()
@@ -96,24 +105,7 @@ class Ui_Dialog(object):
                 while self.board[randpick] == 0 or self.board[randpick] == 1:
                     randpick = random.randint(0, 8)
 
-                if randpick == 0:
-                    self.pushButton.setStyleSheet("background-color: red")
-                if randpick == 1:
-                    self.pushButton_2.setStyleSheet("background-color: red")
-                if randpick == 2:
-                    self.pushButton_3.setStyleSheet("background-color: red")
-                if randpick == 3:
-                    self.pushButton_4.setStyleSheet("background-color: red")
-                if randpick == 4:
-                    self.pushButton_5.setStyleSheet("background-color: red")
-                if randpick == 5:
-                    self.pushButton_6.setStyleSheet("background-color: red")
-                if randpick == 6:
-                    self.pushButton_7.setStyleSheet("background-color: red")
-                if randpick == 7:
-                    self.pushButton_8.setStyleSheet("background-color: red")
-                if randpick == 8:
-                    self.pushButton_9.setStyleSheet("background-color: red")
+                self.buttons[randpick].setStyleSheet("background-color: red")
                 self.board[randpick] = 1
                 self.checkWin(1)
 
@@ -149,15 +141,9 @@ class Ui_Dialog(object):
         self.turn = 0
         self.turns = 0
         self.status = 0
-        self.pushButton.setStyleSheet("background-color: none")
-        self.pushButton_2.setStyleSheet("background-color: none")
-        self.pushButton_3.setStyleSheet("background-color: none")
-        self.pushButton_4.setStyleSheet("background-color: none")
-        self.pushButton_5.setStyleSheet("background-color: none")
-        self.pushButton_6.setStyleSheet("background-color: none")
-        self.pushButton_7.setStyleSheet("background-color: none")
-        self.pushButton_8.setStyleSheet("background-color: none")
-        self.pushButton_9.setStyleSheet("background-color: none")
+        for i in range(0, 9):
+            self.buttons[i].setStyleSheet("background-color: none")
+
         self.lineEdit_2.setText(" ")
 
 
