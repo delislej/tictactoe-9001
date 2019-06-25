@@ -7,9 +7,13 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from functools import partial
 
 class Ui_Dialog(object):
+    board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    turn = 0
+    status = 0
+
     def __init__(self):
         board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
         turn = 1
@@ -63,13 +67,38 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
-        self.pushButton.clicked.connect(self.red)
-        self.pushButton_2.clicked.connect(self.blue)
+
+        self.pushButton.clicked.connect(partial(self.playTurn, self.turn, self.pushButton, 0))
+        self.pushButton_2.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_2, 1))
+        self.pushButton_3.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_3, 2))
+        self.pushButton_4.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_4, 3))
+        self.pushButton_5.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_5, 4))
+        self.pushButton_6.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_6, 5))
+        self.pushButton_7.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_7, 6))
+        self.pushButton_8.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_8, 7))
+        self.pushButton_9.clicked.connect(partial(self.playTurn, self.turn, self.pushButton_9, 8))
+
+    def playTurn(self, turn, button, boardnum):
+
+        if self.turn == 1:
+            # self.comTurn()
+            print("com plays")
+            button.setStyleSheet("background-color: red")
+            self.turn = 0
+            self.lineEdit.setText("turn: " + str(self.turn))
+        else:
+            self.turn = 1
+            button.setStyleSheet("background-color: blue")
+            self.lineEdit.setText("turn: " + str(self.turn))
+
+
+
+
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.lineEdit.setText(_translate("Dialog", "Turn"))
+        self.lineEdit.setText(_translate("Dialog", "Turn: 0"))
         self.lineEdit_2.setText(_translate("Dialog", "status"))
 
     def red(self):
