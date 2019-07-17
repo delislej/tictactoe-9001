@@ -31,14 +31,17 @@ class Ui_Dialog(object):
         self.pushButton_5.setGeometry(QtCore.QRect(250, 218, 75, 61))
         self.pushButton_5.setText("")
         self.pushButton_5.setObjectName("pushButton_5")
+
         self.pushButton_9 = QtWidgets.QPushButton(Dialog)
         self.pushButton_9.setGeometry(QtCore.QRect(400, 338, 75, 61))
         self.pushButton_9.setText("")
         self.pushButton_9.setObjectName("pushButton_9")
+
         self.resetButton = QtWidgets.QPushButton(Dialog)
         self.resetButton.setGeometry(QtCore.QRect(400, 40, 75, 30))
         self.resetButton.setText("reset")
         self.resetButton.setObjectName("reset_button")
+
         self.pushButton_3 = QtWidgets.QPushButton(Dialog)
         self.pushButton_3.setGeometry(QtCore.QRect(400, 108, 75, 61))
         self.pushButton_3.setText("")
